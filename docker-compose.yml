@@ -1,5 +1,8 @@
 version: "3"
 
+volumes:
+  mongodb_api:
+
 services:
   api:
     build: ./api
@@ -8,9 +11,11 @@ services:
       - "8080:8080"
     environment:
       - PORT=8080
-      - HOST=172.24.156.108
+      - HOST=localhost
       - DB=mongodb://api_db:27017/api
     depends_on:
       - api_db
   api_db:
     image: mongo:latest
+    volumes:
+      - mongodb_api:/data/db
