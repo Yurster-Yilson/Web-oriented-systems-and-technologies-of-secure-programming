@@ -5,3 +5,20 @@ services:
     command: npm run dev
     volumes:
       - ./api/src:/usr/src/app/src
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: realworld-docker-frontend
+    command: npm run start
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - './frontend:/usr/src/app'
+      - '/app/node_modules'
